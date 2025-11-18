@@ -1,0 +1,6 @@
+@StudioSchedule.WebAPI_HostAddress = http://localhost:5283
+
+GET {{StudioSchedule.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
