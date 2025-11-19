@@ -20,6 +20,9 @@ public class GetUserById
         public async Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.Id);
+            if (entity == null)
+                throw new NullReferenceException("User not found");
+            
             var user = new UserResponse()
             {
                 Id = entity.Id,
