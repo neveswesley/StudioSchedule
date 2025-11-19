@@ -22,6 +22,7 @@ public class GetUserById
             var entity = await _repository.GetByIdAsync(request.Id);
             var user = new UserResponse()
             {
+                Id = entity.Id,
                 Name = entity.Name,
                 Email = entity.Email,
                 Role = entity.Role
