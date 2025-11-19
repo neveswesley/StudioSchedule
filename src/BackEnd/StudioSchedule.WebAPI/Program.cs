@@ -1,3 +1,4 @@
+using StudioSchedule.Application;
 using StudioSchedule.Application.Services;
 using StudioSchedule.Infrastructure.Database;
 
