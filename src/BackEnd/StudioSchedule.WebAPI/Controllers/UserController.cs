@@ -24,6 +24,15 @@ namespace StudioSchedule.WebAPI.Controllers
             var command = await _mediator.Send(request, cancellationToken);
             return Ok(command);
         }
+        
+        [HttpPut("UpdateUser/{id}")]
+        public async Task<IActionResult> Put([FromRoute] Guid id, UpdateUserRequest request, CancellationToken cancellationToken)
+        {
+            var command = new UpdateUserCommand(id, request.Name, request.Email);
+            
+            var response = await _mediator.Send(command, cancellationToken);
+            return Ok(response);
+        }
 
         [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
