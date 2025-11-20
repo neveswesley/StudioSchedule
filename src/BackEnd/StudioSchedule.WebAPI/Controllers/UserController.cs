@@ -33,6 +33,15 @@ namespace StudioSchedule.WebAPI.Controllers
             var response = await _mediator.Send(command, cancellationToken);
             return Ok(response);
         }
+        
+        [HttpDelete("DeleteUser/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var command = new DeleteUserCommand(id);
+            
+            var response = await _mediator.Send(command, cancellationToken);
+            return Ok(response);
+        }
 
         [HttpGet("GetUserById/{id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
