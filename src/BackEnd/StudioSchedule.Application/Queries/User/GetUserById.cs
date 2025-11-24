@@ -19,7 +19,7 @@ public class GetUserById
 
         public async Task<UserResponse> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByIdAsync(request.Id);
+            var entity = await _repository.GetUserWithStudios(request.Id);
             if (entity == null)
                 throw new NullReferenceException("User not found");
             
@@ -28,8 +28,19 @@ public class GetUserById
                 Id = entity.Id,
                 Name = entity.Name,
                 Email = entity.Email,
-                Role = entity.Role
-            };
+                Role = entity.Role,
+                Studios = entity.Studios.Select(s => new StudioResponse
+                {
+                    Id = s.Id,
+                    OwnerId = s.UserId,
+                    Name = s.Name,
+                    Address = s.Address,
+                    City = s.City,
+                    Description = s.Description,
+                    ImageUrl = s.ImageUrl,
+                    CreatedAt = s.CreatedAt,
+                }).ToList() ?? new List<StudioResponse>()};
+            
             return user;
         }
     }

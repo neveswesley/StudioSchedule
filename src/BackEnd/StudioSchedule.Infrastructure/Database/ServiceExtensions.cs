@@ -26,6 +26,7 @@ public static class ServiceExtensions
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IStudioRepository, StudioRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 }

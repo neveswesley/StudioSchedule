@@ -6,11 +6,10 @@ namespace StudioSchedule.Application.Queries.User;
 
 public class GetAllUsers
 {
-    public sealed record GetAllUsersQuery() : IRequest<IEnumerable<UserResponse>>;
-    
-    public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, IEnumerable<UserResponse>>
+    public sealed record GetAllUsersQuery() : IRequest<List<UserResponse>>;
+
+    public class GetAllUsersHandler : IRequestHandler<GetAllUsersQuery, List<UserResponse>>
     {
-        
         private readonly IUserRepository _userRepository;
 
         public GetAllUsersHandler(IUserRepository userRepository)
@@ -18,18 +17,30 @@ public class GetAllUsers
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<UserResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserResponse>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _userRepository.GetAllAsync();
-            var users = entity.Select(u => new UserResponse
+            var entity = await _userRepository.GetAllUsersWithStudios();
+
+            var user = entity.Select(x => new UserResponse
             {
-                Id = u.Id,
-                Email = u.Email,
-                Name = u.Name,
-                Role = u.Role
-            });
+                Id = x.Id,
+                Name = x.Name,
+                Email = x.Email,
+                Role = x.Role,
+                Studios = x.Studios.Select(x => new StudioResponse()
+                {
+                    Id = x.Id,
+                    OwnerId = x.UserId,
+                    Name = x.Name,
+                    Address = x.Address,
+                    City = x.City,
+                    Description = x.Description,
+                    ImageUrl = x.ImageUrl,
+                    CreatedAt = x.CreatedAt,
+                }).ToList() ?? new List<StudioResponse>()
+            }).ToList();
             
-            return users;
+            return user;
         }
     }
 }
