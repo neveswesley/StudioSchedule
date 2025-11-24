@@ -11,9 +11,11 @@ public class AppDbContext : DbContext
     }   
     
     public DbSet<User> Users { get; set; }
+    public DbSet<Studio> Studios { get; set; }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)  
-    {  
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Studio>().HasOne(u => u.User).WithMany(s => s.Studios);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);  
     }
 }
