@@ -31,6 +31,5 @@ namespace StudioSchedule.WebAPI.Controllers
             var command = await _mediator.Send(new GetAllStudios(), cancellationToken);
             return Ok(command);
         }
-
     }
 }
