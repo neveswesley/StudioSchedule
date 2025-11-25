@@ -32,5 +32,20 @@ namespace StudioSchedule.WebAPI.Controllers
             return Ok(command);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var command = await _mediator.Send(new GetStudioById(id));
+            return Ok(command);
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, UpdateStudioRequest request, CancellationToken cancellationToken)
+        {
+            var command = new UpdateStudioCommand(id, request.Name, request.Address, request.City, request.Description, request.ImageUrl);
+            var response = await _mediator.Send(command, cancellationToken);
+            return Ok(response);
+        }
+
     }
 }
