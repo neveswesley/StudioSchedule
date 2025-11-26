@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using StudioSchedule.Domain.DTO;
+using StudioSchedule.Domain.Entities;
 using StudioSchedule.Domain.Interfaces;
 
 namespace StudioSchedule.Application.Queries.Studio;
@@ -19,7 +20,7 @@ public class GetAllStudiosQueryHandler : IRequestHandler<GetAllStudios, List<Stu
 
     public async Task<List<StudioResponse>> Handle(GetAllStudios request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetAllAsync();
+        var entity = await _repository.GetAllStudiosWithRoom();
 
         var result = entity.Select(s => new StudioResponse
         {
@@ -30,6 +31,15 @@ public class GetAllStudiosQueryHandler : IRequestHandler<GetAllStudios, List<Stu
             City = s.City,
             Description = s.Description,
             ImageUrl = s.ImageUrl,
+            Rooms = s.Rooms.Select(r=> new RoomResponse()
+            {
+                Id = r.Id,
+                Name = r.Name,
+                HourPrice = r.HourPrice,
+                OpenHour = r.OpenHour,
+                CloseHour = r.CloseHour,
+                Description = r.Description,
+            }).ToList(),
             CreatedAt = s.CreatedAt,
         }).ToList();
         

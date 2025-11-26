@@ -18,18 +18,27 @@ public class Handler : IRequestHandler<GetStudioById, StudioResponse>
 
     public async Task<StudioResponse> Handle(GetStudioById request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetByIdAsync(request.Id);
+        var entity = await _repository.GetStudioWithRoom(request.Id);
         
-        var result = new StudioResponse()
+        var result = new StudioResponse
         {
             Id = entity.Id,
+            OwnerId = entity.UserId,
             Name = entity.Name,
             Address = entity.Address,
             City = entity.City,
-            CreatedAt = entity.CreatedAt,
             Description = entity.Description,
             ImageUrl = entity.ImageUrl,
-            OwnerId = entity.UserId
+            Rooms = entity.Rooms.Select(r=> new RoomResponse()
+            {
+                Id = r.Id,
+                Name = r.Name,
+                HourPrice = r.HourPrice,
+                OpenHour = r.OpenHour,
+                CloseHour = r.CloseHour,
+                Description = r.Description,
+            }).ToList(),
+            CreatedAt = entity.CreatedAt,
         };
 
         return result;

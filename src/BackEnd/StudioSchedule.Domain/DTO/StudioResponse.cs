@@ -1,4 +1,6 @@
-﻿namespace StudioSchedule.Domain.DTO;
+﻿using StudioSchedule.Domain.Entities;
+
+namespace StudioSchedule.Domain.DTO;
 
 public class StudioResponse
 {
@@ -9,5 +11,6 @@ public class StudioResponse
     public string City { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string ImageUrl { get; set; } = string.Empty;
+    public List<RoomResponse> Rooms { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

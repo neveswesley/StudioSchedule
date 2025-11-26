@@ -1,4 +1,5 @@
-﻿using StudioSchedule.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StudioSchedule.Domain.Entities;
 using StudioSchedule.Domain.Interfaces;
 using StudioSchedule.Infrastructure.Database;
 
@@ -6,12 +7,20 @@ namespace StudioSchedule.Infrastructure.Repositories;
 
 public class StudioRepository : BaseRepository<Studio>, IStudioRepository
 {
-    public StudioRepository(AppDbContext db) : base(db)
+    private readonly AppDbContext _context;
+
+    public StudioRepository(AppDbContext db, AppDbContext context) : base(db)
     {
+        _context = context;
     }
 
-    public Task<Studio> GetAllUsersWithStudios()
+    public async Task<Studio> GetStudioWithRoom(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Studios.Include(s=>s.Rooms).FirstOrDefaultAsync(s => s.Id == id);
+    }
+
+    public async Task<List<Studio>> GetAllStudiosWithRoom()
+    {
+        return await _context.Studios.Include(s => s.Rooms).ToListAsync();
     }
 }
