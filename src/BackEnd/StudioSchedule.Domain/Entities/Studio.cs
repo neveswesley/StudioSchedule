@@ -17,6 +17,7 @@ public class Studio : BaseEntity
     public string City { get; set; }
     public string Description { get; set; }
     public string ImageUrl { get; set; }
+    public List<Room> Rooms { get; set; } = new();
     public Guid UserId { get; set; }
     public User User { get; set; }
     
