@@ -1,5 +1,10 @@
-﻿using MediatR;
+﻿using System.ComponentModel.DataAnnotations;
+using FluentValidation.Results;
+using MediatR;
+using StudioSchedule.Application.Validators.Room;
+using StudioSchedule.Domain.DTO;
 using StudioSchedule.Domain.Interfaces;
+using StudioSchedule.Exceptions;
 
 namespace StudioSchedule.Application.Command.Room;
 
@@ -16,16 +21,21 @@ public sealed record CreateRoom : IRequest<Guid>
 public class CreateRoomHandler : IRequestHandler<CreateRoom, Guid>
 {
     private readonly IRoomRepository _repository;
+    private readonly IStudioRepository _studioRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateRoomHandler(IRoomRepository repository, IUnitOfWork unitOfWork)
+    public CreateRoomHandler(IRoomRepository repository, IStudioRepository studioRepository, IUnitOfWork unitOfWork)
     {
         _repository = repository;
+        _studioRepository = studioRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Guid> Handle(CreateRoom request, CancellationToken cancellationToken)
     {
+
+        await Validate(request);
+
         var entity = new Domain.Entities.Room()
         {
             StudioId = request.StudioId,
@@ -40,5 +50,26 @@ public class CreateRoomHandler : IRequestHandler<CreateRoom, Guid>
         await _unitOfWork.Commit(cancellationToken);
         
         return entity.Id;
+    }
+    
+    private async Task Validate(CreateRoom request)
+    {
+        var validator = new CreateRoomValidator();
+        
+        var result = validator.Validate(request);
+
+        var studioIdValidation = await _studioRepository.GetByIdAsync(request.StudioId);
+        
+        if (studioIdValidation == null)
+        {
+            result.Errors.Add(new ValidationFailure(string.Empty, ResourceMessagesException.STUDIO_NULL));
+        }
+        
+        if (result.IsValid == false)
+        {
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }

@@ -33,7 +33,6 @@ public class GetAllStudiosQueryHandler : IRequestHandler<GetAllStudios, List<Stu
             ImageUrl = s.ImageUrl,
             Rooms = s.Rooms.Select(r=> new RoomResponse()
             {
-                Id = r.Id,
                 Name = r.Name,
                 HourPrice = r.HourPrice,
                 OpenHour = r.OpenHour,

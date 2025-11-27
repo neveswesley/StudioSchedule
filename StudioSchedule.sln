@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackEnd", "BackEnd", "{F620
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{0FA12C24-800E-4464-9DC0-8896935FC1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioSchedule.WebAPI", "src\BackEnd\StudioSchedule.WebAPI\StudioSchedule.WebAPI.csproj", "{81D320CF-436F-4B4F-B3BC-FA11375CBDDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioSchedule.API", "src\BackEnd\StudioSchedule.API\StudioSchedule.API.csproj", "{81D320CF-436F-4B4F-B3BC-FA11375CBDDD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudioSchedule.Application", "src\BackEnd\StudioSchedule.Application\StudioSchedule.Application.csproj", "{3E9E5CD4-7D80-4FA8-AFB7-520B99FBC343}"
 EndProject

@@ -31,7 +31,6 @@ public class Handler : IRequestHandler<GetStudioById, StudioResponse>
             ImageUrl = entity.ImageUrl,
             Rooms = entity.Rooms.Select(r=> new RoomResponse()
             {
-                Id = r.Id,
                 Name = r.Name,
                 HourPrice = r.HourPrice,
                 OpenHour = r.OpenHour,

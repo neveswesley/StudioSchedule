@@ -50,10 +50,8 @@ namespace StudioSchedule.WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
         {
-            var command = new DeleteStudio(id);
-            var response = await _mediator.Send(command, cancellationToken);
-            
-            return Ok(response);
+            var command = await _mediator.Send(new DeleteStudio(id), cancellationToken);
+            return Ok(command);
         }
 
     }

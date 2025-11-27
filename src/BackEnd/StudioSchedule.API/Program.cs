@@ -1,6 +1,7 @@
 using StudioSchedule.Application;
 using StudioSchedule.Application.Services;
 using StudioSchedule.Infrastructure.Database;
+using StudioSchedule.WebAPI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureApplicationApp();
 builder.Services.ConfigurePersistenceApp(builder.Configuration);
-
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
 
 
 var app = builder.Build();
