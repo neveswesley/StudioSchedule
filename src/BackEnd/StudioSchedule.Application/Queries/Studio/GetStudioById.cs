@@ -23,7 +23,6 @@ public class Handler : IRequestHandler<GetStudioById, StudioResponse>
         var result = new StudioResponse
         {
             Id = entity.Id,
-            OwnerId = entity.UserId,
             Name = entity.Name,
             Address = entity.Address,
             City = entity.City,
@@ -37,7 +36,6 @@ public class Handler : IRequestHandler<GetStudioById, StudioResponse>
                 CloseHour = r.CloseHour,
                 Description = r.Description,
             }).ToList(),
-            CreatedAt = entity.CreatedAt,
         };
 
         return result;

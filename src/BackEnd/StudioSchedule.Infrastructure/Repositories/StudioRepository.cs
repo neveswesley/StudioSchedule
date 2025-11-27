@@ -23,4 +23,9 @@ public class StudioRepository : BaseRepository<Studio>, IStudioRepository
     {
         return await _context.Studios.Include(s => s.Rooms).ToListAsync();
     }
+
+    public IQueryable<Studio> Query()
+    {
+        return _context.Studios.AsNoTracking();
+    }
 }

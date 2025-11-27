@@ -20,20 +20,19 @@ public sealed record CreateRoom : IRequest<Guid>
 
 public class CreateRoomHandler : IRequestHandler<CreateRoom, Guid>
 {
-    private readonly IRoomRepository _repository;
+    private readonly IRoomRepository _roomRepository;
     private readonly IStudioRepository _studioRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateRoomHandler(IRoomRepository repository, IStudioRepository studioRepository, IUnitOfWork unitOfWork)
+    public CreateRoomHandler(IRoomRepository roomRepository, IStudioRepository studioRepository, IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _roomRepository = roomRepository;
         _studioRepository = studioRepository;
         _unitOfWork = unitOfWork;
     }
 
     public async Task<Guid> Handle(CreateRoom request, CancellationToken cancellationToken)
     {
-
         await Validate(request);
 
         var entity = new Domain.Entities.Room()
@@ -46,7 +45,7 @@ public class CreateRoomHandler : IRequestHandler<CreateRoom, Guid>
             Description = request.Description
         };
 
-        await _repository.CreateAsync(entity);
+        await _roomRepository.CreateAsync(entity);
         await _unitOfWork.Commit(cancellationToken);
         
         return entity.Id;

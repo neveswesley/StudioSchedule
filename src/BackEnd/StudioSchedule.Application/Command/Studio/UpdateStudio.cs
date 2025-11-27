@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using StudioSchedule.Application.Validators.Studio;
 using StudioSchedule.Domain.DTO;
 using StudioSchedule.Domain.Interfaces;
+using StudioSchedule.Exceptions;
 
 namespace StudioSchedule.Application.Command.Studio;
 
@@ -36,6 +38,9 @@ public class UpdateStudioHandler : IRequestHandler<UpdateStudioCommand, StudioRe
 
     public async Task<StudioResponse> Handle(UpdateStudioCommand request, CancellationToken cancellationToken)
     {
+        
+        await Validate(request);
+        
         var entity = await _repository.GetByIdAsync(request.Id);
         
         entity.Name = request.Name;
@@ -53,12 +58,24 @@ public class UpdateStudioHandler : IRequestHandler<UpdateStudioCommand, StudioRe
             Name = entity.Name,
             Address = entity.Address,
             City = entity.City,
-            CreatedAt = entity.CreatedAt,
             Description = entity.Description,
             ImageUrl = entity.ImageUrl,
-            OwnerId = entity.UserId
         };
         
         return result;
+    }
+    
+    private async Task Validate(UpdateStudioCommand request)
+    {
+        var validator = new UpdateStudioValidator();
+        
+        var result = validator.Validate(request);
+        
+        if (result.IsValid == false)
+        {
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }

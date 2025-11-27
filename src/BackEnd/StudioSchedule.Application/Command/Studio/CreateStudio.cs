@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using StudioSchedule.Application.Validators.Studio;
 using StudioSchedule.Domain.DTO;
 using StudioSchedule.Domain.Interfaces;
+using StudioSchedule.Exceptions;
 
 namespace StudioSchedule.Application.Command.Studio;
 
-public sealed record CreateStudio : IRequest<StudioResponse>
+public sealed record CreateStudio : IRequest<Guid>
 {
     public string Name { get; set; }
     public string Address { get; set; }
@@ -14,7 +16,7 @@ public sealed record CreateStudio : IRequest<StudioResponse>
     public Guid UserId { get; set; }
 }
 
-public class CreateStudioCommandHandler : IRequestHandler<CreateStudio, StudioResponse>
+public class CreateStudioCommandHandler : IRequestHandler<CreateStudio, Guid>
 {
     private readonly IStudioRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
@@ -25,8 +27,11 @@ public class CreateStudioCommandHandler : IRequestHandler<CreateStudio, StudioRe
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<StudioResponse> Handle(CreateStudio request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateStudio request, CancellationToken cancellationToken)
     {
+        
+        await Validate(request);
+        
         var entity = new Domain.Entities.Studio
         {
             Name = request.Name,
@@ -40,16 +45,20 @@ public class CreateStudioCommandHandler : IRequestHandler<CreateStudio, StudioRe
         await _repository.CreateAsync(entity);
         await _unitOfWork.Commit(cancellationToken);
 
-        return new StudioResponse()
+        return entity.Id;
+    }
+    
+    private async Task Validate(CreateStudio request)
+    {
+        var validator = new CreateStudioValidator();
+        
+        var result = validator.Validate(request);
+        
+        if (result.IsValid == false)
         {
-            Id = entity.Id,
-            Name = entity.Name,
-            Address = entity.Address,
-            City = entity.City,
-            Description = entity.Description,
-            ImageUrl = entity.ImageUrl,
-            OwnerId = entity.UserId,
-            CreatedAt = entity.CreatedAt
-        };
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+
+            throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }

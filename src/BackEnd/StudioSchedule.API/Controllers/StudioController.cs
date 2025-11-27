@@ -26,10 +26,10 @@ namespace StudioSchedule.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllStudios query ,CancellationToken cancellationToken)
         {
-            var command = await _mediator.Send(new GetAllStudios(), cancellationToken);
-            return Ok(command);
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

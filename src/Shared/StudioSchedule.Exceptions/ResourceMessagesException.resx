@@ -117,29 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CLOSE_HOUR_EMPTY" xml:space="preserve">
-    <value>Close hour cannot be empty.</value>
-  </data>
   <data name="CLOSE_HOUR_LENGTH" xml:space="preserve">
     <value>Invalid open hour.</value>
-  </data>
-  <data name="DESCRIPTION_EMPTY" xml:space="preserve">
-    <value>Description cannot be empty.</value>
   </data>
   <data name="DESCRIPTION_LENGTH" xml:space="preserve">
     <value>Description must be between 1 and 1000 characters.</value>
   </data>
-  <data name="HOUR_PRICE_EMPTY" xml:space="preserve">
-    <value>Hour price cannot be empty.</value>
-  </data>
-  <data name="NAME_EMPTY" xml:space="preserve">
-    <value>Name cannot be empty.</value>
-  </data>
   <data name="NAME_LENGTH" xml:space="preserve">
     <value>Name must be between 1 and 100 characters.</value>
-  </data>
-  <data name="OPEN_HOUR_EMPTY" xml:space="preserve">
-    <value>Open hour cannot be empty.</value>
   </data>
   <data name="OPEN_HOUR_LENGTH" xml:space="preserve">
     <value>Invalid open hour.</value>
@@ -152,5 +137,11 @@
   </data>
   <data name="ROOM_NULL" xml:space="preserve">
     <value>Room not found.</value>
+  </data>
+  <data name="REQUIRED" xml:space="preserve">
+    <value>{PropertyName} cannot be empty.</value>
+  </data>
+  <data name="AT_LEAST_THREE" xml:space="preserve">
+    <value>{PropertyName} must be at least 3 characters.</value>
   </data>
 </root>

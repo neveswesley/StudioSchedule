@@ -32,13 +32,11 @@ public class GetUserById
                 Studios = entity.Studios.Select(s => new StudioResponse
                 {
                     Id = s.Id,
-                    OwnerId = s.UserId,
                     Name = s.Name,
                     Address = s.Address,
                     City = s.City,
                     Description = s.Description,
                     ImageUrl = s.ImageUrl,
-                    CreatedAt = s.CreatedAt,
                 }).ToList() ?? new List<StudioResponse>()};
             
             return user;

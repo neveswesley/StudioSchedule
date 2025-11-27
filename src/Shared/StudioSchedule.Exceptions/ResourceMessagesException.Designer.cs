@@ -60,11 +60,11 @@ namespace StudioSchedule.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close hour cannot be empty..
+        ///   Looks up a localized string similar to {PropertyName} must be at least 3 characters..
         /// </summary>
-        public static string CLOSE_HOUR_EMPTY {
+        public static string AT_LEAST_THREE {
             get {
-                return ResourceManager.GetString("CLOSE_HOUR_EMPTY", resourceCulture);
+                return ResourceManager.GetString("AT_LEAST_THREE", resourceCulture);
             }
         }
         
@@ -78,38 +78,11 @@ namespace StudioSchedule.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description cannot be empty..
-        /// </summary>
-        public static string DESCRIPTION_EMPTY {
-            get {
-                return ResourceManager.GetString("DESCRIPTION_EMPTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Description must be between 1 and 1000 characters..
         /// </summary>
         public static string DESCRIPTION_LENGTH {
             get {
                 return ResourceManager.GetString("DESCRIPTION_LENGTH", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hour price cannot be empty..
-        /// </summary>
-        public static string HOUR_PRICE_EMPTY {
-            get {
-                return ResourceManager.GetString("HOUR_PRICE_EMPTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name cannot be empty..
-        /// </summary>
-        public static string NAME_EMPTY {
-            get {
-                return ResourceManager.GetString("NAME_EMPTY", resourceCulture);
             }
         }
         
@@ -123,20 +96,20 @@ namespace StudioSchedule.Exceptions {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open hour cannot be empty..
-        /// </summary>
-        public static string OPEN_HOUR_EMPTY {
-            get {
-                return ResourceManager.GetString("OPEN_HOUR_EMPTY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid open hour..
         /// </summary>
         public static string OPEN_HOUR_LENGTH {
             get {
                 return ResourceManager.GetString("OPEN_HOUR_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} cannot be empty..
+        /// </summary>
+        public static string REQUIRED {
+            get {
+                return ResourceManager.GetString("REQUIRED", resourceCulture);
             }
         }
         

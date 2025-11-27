@@ -30,13 +30,11 @@ public class GetAllUsers
                 Studios = x.Studios.Select(x => new StudioResponse()
                 {
                     Id = x.Id,
-                    OwnerId = x.UserId,
                     Name = x.Name,
                     Address = x.Address,
                     City = x.City,
                     Description = x.Description,
                     ImageUrl = x.ImageUrl,
-                    CreatedAt = x.CreatedAt,
                 }).ToList() ?? new List<StudioResponse>()
             }).ToList();
             
