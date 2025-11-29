@@ -23,4 +23,9 @@ public class RoomRepository : BaseRepository<Room>, IRoomRepository
     {
         return await _context.Rooms.Include(x => x.Studio).FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public IQueryable<Room> Query()
+    {
+        return _context.Rooms.AsNoTracking();
+    }
 }

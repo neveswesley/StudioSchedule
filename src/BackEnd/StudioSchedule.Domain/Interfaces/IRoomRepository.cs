@@ -6,4 +6,5 @@ public interface IRoomRepository : IBaseRepository<Room>
 {
     Task<List<Room>> GetAllRoomsWithStudios();
     Task<Room> GetRoomByIdWithStudios(Guid id);
+    IQueryable<Room> Query();
 }
